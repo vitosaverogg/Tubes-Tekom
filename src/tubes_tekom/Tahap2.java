@@ -53,8 +53,9 @@ public class Tahap2 {
         table[2][6] = "7A";
         table[2][7] = "8A";
         table[2][8] = "9A";
-        table[2][9] = "success";
+        table[2][9] = "lamda";
         ArrayList<Character> stack = new ArrayList<>();
+        int literator = 1;
         state = 'i';
         a = '#';
         stack.add(a);
@@ -62,53 +63,56 @@ public class Tahap2 {
         a = 'S';
         stack.add(a);
         state = 'q';
-        while (stack.get(stack.size() - 1) != '#') {
 
-            if (stack.get(stack.size() - 1) == 'A' || stack.get(stack.size() - 1) == 'S' || stack.get(stack.size() - 1) == 'B') {
-                if (stack.get(stack.size() - 1) == 'S') {
-                    s = 0;
-                } else if (stack.get(stack.size() - 1) == 'A') {
-                    s = 1;
-                } else {
-                    s = 2;
-                };
-                
-                var = table[s][token.get(i) - 1];
-//                System.out.println("s: " + s);
-//                System.out.println("token: " + token.get(i));
-                if (var.equals("error")) {
-                    status = "tidak valid";
-                    break;
-                } else if (token.get(i) == 9) {
-                    stack.remove(stack.get(stack.size() - 1));
-                    token.set(i, temp);
-                }else if (var.equals("lamda")){
-                    stack.remove(stack.get(stack.size() - 1));
-                }else {
-                    stack.remove(stack.get(stack.size() - 1));
-                    for (int j = var.length() - 1; j >= 0; j--) {
-                        stack.add(var.charAt(j));
-//                        System.out.println("isi stack: " + var.charAt(j));
+        if (token.get(token.size() - 1) == 0) {
+            status = "tidak valid";
+        } else {
+            while (stack.get(stack.size() - 1) != '#') {                
+                if (stack.get(stack.size() - 1) == 'A' || stack.get(stack.size() - 1) == 'S' || stack.get(stack.size() - 1) == 'B') {
+                    if (stack.get(stack.size() - 1) == 'S') {
+                        s = 0;
+                    } else if (stack.get(stack.size() - 1) == 'A') {
+                        s = 1;
+                    } else {
+                        s = 2;
+                    };
+
+                    if (literator == token.size()+1){
+                        var = table[s][9];
                     }
+                    else{
+                        var = table[s][token.get(i) - 1];
+                    }
+                    
+                    if (var.equals("error")) {
+                        status = "tidak valid";
+                        break;
+                    } else if (var.equals("lamda")) {
+                        stack.remove(stack.size() - 1);
+                    } else {
+                        stack.remove(stack.size() - 1);
+                        for (int j = var.length()-1; j >= 0; j--) {
+                            stack.add(var.charAt(j));
+                        }
+                    }
+                } else if ((int) stack.get(stack.size() - 1) >= 48 && (int) stack.get(stack.size() - 1) <= 57) {
+                    stack.remove(stack.size() - 1);
+                    literator++;
+                    if (i + 1 < token.size()) {
+                        i++;
+                    }
+                    
                 }
-            } else if ((int) stack.get(stack.size() - 1) >= 48 && (int) stack.get(stack.size() - 1) <= 57) {
-                stack.remove(stack.size() - 1);
-                if (i + 1 < token.size()) {
-                    i++;
-                } else {
-                    temp = token.get(i);
-                    int f = 9;
-                    token.set(i, f);
-                }
-            } else {
-                status = "tidak valid";
-                break;
             }
+            if (literator < token.size() + 1) {
+                status = "tidak valid";
+            } else if (stack.get(stack.size() - 1) == '#') {
+                status = "valid";
+            }
+            
+            state = 'f';
+            stack.remove(stack.size() - 1);
         }
-
-        state = 'f';
-        stack.remove(stack.size() - 1);
-
         return status;
     }
 

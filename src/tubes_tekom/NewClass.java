@@ -13,18 +13,22 @@ import java.util.Scanner;
  * @author vitosaverogg
  */
 public class NewClass {
+
     public static void main(String[] args) {
-        Tahap1 tahap1 = new Tahap1();
-        Tahap2 tahap2 = new Tahap2();
-        
+
         Scanner scan = new Scanner(System.in);
-        String string = scan.nextLine();
-        tahap1.proses(string);
-        System.out.println(tahap2.readToken(tahap1.getTokenLexic()));
-        for (int i = 0; i < tahap1.getTokenLexic().size() ;i++){
-            System.out.println(tahap1.getString().get(i) +"\t"+ tahap1.getBesaranLexic().get(i) +" \t" + tahap1.getTokenLexic().get(i));
+
+        for (int j = 0; j < 30; j++) {
+            Tahap1 tahap1 = new Tahap1();
+            Tahap2 tahap2 = new Tahap2();
+            
+            String string = scan.nextLine();
+            tahap1.proses(string);
+            System.out.println(tahap2.readToken(tahap1.getTokenLexic()));
+//            for (int i = 0; i < tahap1.getTokenLexic().size(); i++) {
+//                System.out.println(tahap1.getString().get(i) + "\t" + tahap1.getBesaranLexic().get(i) + " \t" + tahap1.getTokenLexic().get(i));
+//            }
         }
-        
-       
+
     }
 }

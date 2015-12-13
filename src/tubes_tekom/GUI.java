@@ -114,6 +114,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void btnCekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCekActionPerformed
         // TODO add your handling code here:
+        tahap1.reset();
         tahap1.proses(txtString.getText());
         txtStatus.setText(tahap2.readToken(tahap1.getTokenLexic()));
         view();

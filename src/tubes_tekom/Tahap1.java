@@ -22,6 +22,12 @@ public class Tahap1 {
     private ArrayList<Integer> tokenLexic = new ArrayList<>();
     private ArrayList<String> besaranLexic = new ArrayList<>();
 
+    public void reset() {
+        string.clear();
+        tokenLexic.clear();
+        besaranLexic.clear();
+    }
+
     public ArrayList<String> getString() {
         return string;
     }
@@ -58,7 +64,7 @@ public class Tahap1 {
 
             switch (state) {
                 case "q0":
-                    if ((int) input.charAt(i) >= 97 && (int) input.charAt(i) <= 122) {
+                    if ((int) input.toLowerCase().charAt(i) >= 97 && (int) input.toLowerCase().charAt(i) <= 122) {
                         state = "q1";
                     } else if ((int) input.charAt(i) >= 48 && (int) input.charAt(i) <= 57) {
                         state = "q2";
@@ -85,7 +91,7 @@ public class Tahap1 {
                         j = i + 1;
                         i++;
 //                        System.out.println("nilai j: " + j);
-                        while (j < input.length() && ((int) input.charAt(j) >= 97 && (int) input.charAt(j) <= 122 || (int) input.charAt(j) >= 48
+                        while (j < input.length() && ((int) input.toLowerCase().charAt(j) >= 97 && (int) input.toLowerCase().charAt(j) <= 122 || (int) input.charAt(j) >= 48
                                 && (int) input.charAt(j) <= 57 || input.charAt(j) == '_')) {
                             temp = temp + (input.charAt(j));
                             j++;
@@ -95,7 +101,7 @@ public class Tahap1 {
                     }
                     a = 1;
                     tokenLexic.add(a);
-                    System.out.println(a);
+//                    System.out.println(a);
                     string.add(temp);
                     b = "Operand";
                     besaranLexic.add(b);
@@ -183,7 +189,7 @@ public class Tahap1 {
                     break;
                 case "q5":
                     temp = "" + input.charAt(i);
-                    a = 8;
+                    a = 9;
                     tokenLexic.add(a);
                     string.add(temp);
                     b = "Operator";
@@ -199,7 +205,7 @@ public class Tahap1 {
                     break;
                 case "q6":
                     temp = "" + input.charAt(i);
-                    a = 9;
+                    a = 8;
                     tokenLexic.add(a);
                     string.add(temp);
                     b = "Operator";
@@ -250,8 +256,32 @@ public class Tahap1 {
                     if (i + 1 < input.length()) {
                         if ((int) input.charAt(i + 1) >= 48 && (int) input.charAt(i + 1) <= 57) {
                             state = "q2";
-                        } else if (input.charAt(i + 1) == '+' || input.charAt(i) == '-') {
+                        } else if (input.charAt(i + 1) == '+' || input.charAt(i+1) == '-') {
                             state = "q11";
+                        } else if (input.charAt(i + 1) == ')') {
+                            state = "q8";
+                            a = 2;
+                            string.add(temp);
+                            tokenLexic.add(a);
+                            b = "Operand";
+                            besaranLexic.add(b);
+                            temp = "";
+                        } else if (input.charAt(i + 1) == '*') {
+                            state = "q6";
+                            a = 2;
+                            string.add(temp);
+                            tokenLexic.add(a);
+                            b = "Operand";
+                            besaranLexic.add(b);
+                            temp = "";
+                        } else if (input.charAt(i + 1) == '/') {
+                            state = "q5";
+                            a = 2;
+                            string.add(temp);
+                            tokenLexic.add(a);
+                            b = "Operand";
+                            besaranLexic.add(b);
+                            temp = "";
                         } else {
                             state = "q12";
                         }
@@ -273,6 +303,12 @@ public class Tahap1 {
                         } else {
                             state = "q12";
                         }
+                    } else {
+                        string.add(temp);
+                        b = "error";
+                        besaranLexic.add(b);
+                        a = 0;
+                        tokenLexic.add(a);
                     }
 
                     break;
@@ -281,6 +317,12 @@ public class Tahap1 {
 
                     if (i + 1 < input.length() && ((int) input.charAt(i + 1) >= 48 && (int) input.charAt(i + 1) <= 57)) {
                         state = "q2";
+                    } else {
+                        string.add(temp);
+                        b = "error";
+                        besaranLexic.add(b);
+                        a = 0;
+                        tokenLexic.add(a);
                     }
                     break;
                 case "q12":
